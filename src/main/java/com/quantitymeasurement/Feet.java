@@ -1,28 +1,38 @@
 package com.quantitymeasurement;
 
-public class Feet{
+public class Feet {
 	private final double value;
-	
+
 	public Feet(double value) {
+		validate(value);
 		this.value = value;
 	}
-	
+
+	private void validate(double value) {
+		if (Double.isNaN(value) || Double.isInfinite(value)) {
+			throw new IllegalArgumentException("Invalid numeric value for Feet");
+		}
+	}
+
 	public double getValue() {
 		return value;
 	}
-	
-	@Override 
+
+	@Override
 	public boolean equals(Object obj) {
-		if(this == obj) return true;
-		if(obj == null) return false;
-		if(getClass() != obj.getClass()) return false;
-		
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+
 		Feet other = (Feet) obj;
-		
+
 		return Double.compare(this.value, other.value) == 0;
 	}
-	
-	@Override 
+
+	@Override
 	public String toString() {
 		return value + " ft";
 	}
