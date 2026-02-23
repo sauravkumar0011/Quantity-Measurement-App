@@ -2,25 +2,37 @@ package com.quantitymeasurement;
 
 public class QuantityMeasurementApp {
 
-	public static void demonstrateFeetEquality() {
-		Feet f1 = new Feet(10.5);
-		Feet f2 = new Feet(10.5);
-		Feet f3 = new Feet(12.0);
-
-		System.out.println("10.5 ft and 10.5 ft :  " + f1.equals(f2)); // true
-		System.out.println("10.5 ft and 12.0 ft :  " + f1.equals(f3)); // false
+	public static boolean demonstrateLengthEquality(Length l1, Length l2) {
+		return l1.equals(l2);
 	}
 	
-	public static void demonstrateInchesEquality() {
-		Inches f1 = new Inches(10.5);
-		Inches f2 = new Inches(10.5);
-		Inches f3 = new Inches(12.0);
-
-		System.out.println("10.5 inch and 10.5 inch :  " + f1.equals(f2)); // true
-		System.out.println("10.5 inch and 12.0 inch:  " + f1.equals(f3)); // false 
+	public static void demonstrateFeetEquality() {
+		Length feet1 = new Length(1.0, Length.LengthUnit.FEET);
+		Length feet2 = new Length(1.0, Length.LengthUnit.FEET);
+		System.out.println("Feet equality: " + demonstrateLengthEquality(feet1, feet2));
 	}
+
+	public static void demonstrateInchesEquality() {
+		Length inch1 = new Length(1.0, Length.LengthUnit.INCHES);
+		Length inch2 = new Length(1.0, Length.LengthUnit.INCHES);
+		System.out.println("Inches equality: " + demonstrateLengthEquality(inch1, inch2));
+	}
+
+	public static void demonstrateFeetInchesComparison() {
+		Length feet1 = new Length(1.0, Length.LengthUnit.FEET);
+		Length inch12 = new Length(12.0, Length.LengthUnit.INCHES);
+		System.out.println("Feet vs Inches equality: " + demonstrateLengthEquality(feet1, inch12));
+	}
+
 	public static void main(String[] args) {
+		
+		// Demonstrate feet equality
 		demonstrateFeetEquality();
+		
+		// Demonstrate inches equality
 		demonstrateInchesEquality();
+		
+		// Demonstrate feet Inches Comparison
+		demonstrateFeetInchesComparison();
 	}
 }
