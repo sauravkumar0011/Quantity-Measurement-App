@@ -29,12 +29,16 @@
 
 - 🧩 **UC5 – Unit-to-Unit Conversion :**
   - Introduces explicit conversion operations between supported length units using centralized enum conversion factors.
-  - Extends the `Length` API to convert measurements across units while preserving mathematical equivalence and precision.   
+  - Extends the `Length` API to convert measurements across units while preserving mathematical equivalence and precision.
 
 - 🧩 **UC6 – Length Addition Operation :**
   - Introduces addition between length measurements with automatic unit normalization and conversion.
   - Returns a new immutable `Length` result expressed in the unit of the first operand while preserving mathematical accuracy.
-  
+ 
+- 🧩 **UC7 – Addition with Target Unit Specification :**
+  - Extends length addition to allow explicit specification of the result unit independent of operand units.
+  - Enhances API flexibility by enabling arithmetic results to be expressed in any supported unit while preserving immutability and precision.
+
 ### 🧰 Tech Stack
 
 - **Java 17+** — core language and application development  
