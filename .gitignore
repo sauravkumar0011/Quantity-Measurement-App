@@ -40,7 +40,6 @@ bin/
 *.bin
 *.out
 *.dump
-*.xml
 *.json
 *.csv
 *.ser
