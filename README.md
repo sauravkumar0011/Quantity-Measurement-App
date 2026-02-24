@@ -71,39 +71,6 @@
     mvn test
     ```
 
-### 📂 Project Structure
-
-```
-  📦 Quantity-Measurement-App
-  │
-  ├── 📁 src
-  │   ├── 📁 main
-  │   │   └── 📁 java
-  │   │       └── 📁 com
-  │   │           └── 📁 quantitymeasurement
-  │   │               ├── 📄 IMeasurable.java
-  │   │               ├── 📄 Quantity.java
-  │   │               ├── 📄 LengthUnit.java
-  │   │               ├── 📄 WeightUnit.java
-  │   │               └── 📄 QuantityMeasurementApp.java
-  │   │
-  │   └── 📁 test
-  │       └── 📁 java
-  │           └── 📁 com
-  │               └── 📁 quantitymeasurement
-  │                   ├── 📄 ArchitecturalTest.java
-  │                   ├── 📄 BackwardCompatibilityTest.java
-  │                   ├── 📄 ConceptualValidationTest.java
-  │                   ├── 📄 QuantityAdditionTest.java
-  │                   ├── 📄 QuantityConversionTest.java
-  │                   ├── 📄 QuantityEqualityTest.java
-  │                   └── 📄 WeightQuantityTest.java
-  │
-  ├── 🚫 .gitignore
-  ├── ⚙️ pom.xml
-  └── 📘 README.md
-```
-
 ### ⚙️ Development Approach
 
  > This project follows an incremental **Test-Driven Development (TDD)** workflow:
