@@ -59,6 +59,11 @@
   - Introduces subtraction between quantities with automatic cross-unit normalization while preserving immutability.
   - Adds division support producing a dimensionless ratio, enabling comparative analysis across measurements of the same category.
 
+- 🧩 **UC13 – Centralized Arithmetic Logic (DRY Refactor) :**
+  - Refactors addition, subtraction, and division to use a centralized arithmetic helper, eliminating duplicated validation and conversion logic.
+  - Improves maintainability and scalability while preserving all existing behaviour and public APIs.
+
+
 ### 🧰 Tech Stack
 
 - **Java 17+** — core language and application development  
