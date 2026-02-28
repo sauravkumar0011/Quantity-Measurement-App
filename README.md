@@ -84,6 +84,54 @@
     mvn test
     ```
 
+### 📂 Project Structure
+
+```
+  📦 Quantity-Measurement-App
+  │
+  ├── 📁 src
+  │   ├── 📁 main
+  │   │   └── 📁 java
+  │   │       └── 📁 com
+  │   │               └── 📁 quantitymeasurement
+  │   │                    ├── 📄 Feet.java
+  │   │                    ├── 📄 Inches.java
+  │   │                    ├── 📄 Length.java
+  |   |                    ├── 📄 Weight.java
+  │   │                    ├── 📄 IMeasurable.java
+  │   │                    ├── 📄 Quantity.java
+  │   │                    ├── 📄 LengthUnit.java
+  │   │                    ├── 📄 WeightUnit.java
+  │   │                    ├── 📄 VolumeUnit.java
+  │   │                    ├── 📄 TemperatureUnit.java
+  │   │                    ├── 📄 SupportsArithmetic.java
+  │   │                    └── 📄 QuantityMeasurementApp.java
+  │   │
+  │   └── 📁 test
+  │       └── 📁 java
+  │           └── 📁 com
+  │                   └── 📁 quantitymeasurement
+  │                       ├── 📄 FeetTest.java
+  │                       ├── 📄 InchesTest.java
+  │                       ├── 📄 LengthTest.java
+  │                       ├── 📄 WeightTest.java
+  │                       ├── 📄 ArchitecturalTest.java
+  │                       ├── 📄 BackwardCompatibilityTest.java
+  │                       ├── 📄 CentralizedArithmeticLogicTest.java
+  │                       ├── 📄 ConceptualValidationTest.java
+  │                       ├── 📄 QuantityAdditionTest.java
+  │                       ├── 📄 QuantityArithmeticTest.java
+  │                       ├── 📄 QuantityConversionTest.java
+  │                       ├── 📄 QuantityEqualityTest.java
+  │                       ├── 📄 TemperatureQuantityTest.java
+  │                       ├── 📄 WeightQuantityTest.java
+  │                       └── 📄 VolumeQuantityTest.java
+  │
+  ├── ⚙️ pom.xml
+  ├── 🚫 .gitignore
+  └── 📘 README.md
+```
+
 ### ⚙️ Development Approach
 
  > This project follows an incremental **Test-Driven Development (TDD)** workflow:
