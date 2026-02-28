@@ -63,6 +63,13 @@
   - Refactors addition, subtraction, and division to use a centralized arithmetic helper, eliminating duplicated validation and conversion logic.
   - Improves maintainability and scalability while preserving all existing behaviour and public APIs.
 
+- 🧩 **UC14 – Temperature Measurement (Selective Arithmetic Support) :**
+  - Introduces temperature measurements using `TemperatureUnit` integrated into the generic `Quantity<U>` architecture.
+  - Supports equality comparison and unit conversion across Celsius, Fahrenheit, and Kelvin using non-linear conversion formulas.
+  - Refactors `IMeasurable` with default capability validation to allow category-specific operation support.
+  - Prevents unsupported arithmetic operations (addition, subtraction, division) through explicit validation and meaningful exceptions.
+  - Demonstrates Interface Segregation and capability-based design while preserving backward compatibility for length, weight, and volume.
+
 
 ### 🧰 Tech Stack
 
