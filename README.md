@@ -70,6 +70,14 @@
   - Prevents unsupported arithmetic operations (addition, subtraction, division) through explicit validation and meaningful exceptions.
   - Demonstrates Interface Segregation and capability-based design while preserving backward compatibility for length, weight, and volume.
 
+- 🧩 **UC15 – N-Tier Architecture Refactoring :**
+  - Refactors the Quantity Measurement Application from a monolithic design into a structured **N-Tier architecture**.
+  - Introduces layered separation including **Controller, Service, Repository, Model, Entity, DTO, Interfaces, and Units** packages.
+  - Moves business logic into the **Service layer**, while the **Controller layer** manages application interaction and orchestration.
+  - Adds a **Repository layer with a cache-based storage implementation** to record measurement operations.
+  - Standardizes data flow using **QuantityDTO for external transfer**, **QuantityModel for internal processing**, and **QuantityMeasurementEntity for persistence**.
+  - Improves **modularity, testability, maintainability, and extensibility**, preparing the system for future integration with **REST APIs or database storage**.
+
 
 ### 🧰 Tech Stack
 
@@ -94,45 +102,90 @@
 ### 📂 Project Structure
 
 ```
-  📦 Quantity-Measurement-App
+ 📦 QuantityMeasurementApp
   │
   ├── 📁 src
   │   ├── 📁 main
   │   │   └── 📁 java
   │   │       └── 📁 com
+  │   │           └── 📁 app
   │   │               └── 📁 quantitymeasurement
-  │   │                    ├── 📄 Feet.java
-  │   │                    ├── 📄 Inches.java
-  │   │                    ├── 📄 Length.java
-  |   |                    ├── 📄 Weight.java
-  │   │                    ├── 📄 IMeasurable.java
-  │   │                    ├── 📄 Quantity.java
-  │   │                    ├── 📄 LengthUnit.java
-  │   │                    ├── 📄 WeightUnit.java
-  │   │                    ├── 📄 VolumeUnit.java
-  │   │                    ├── 📄 TemperatureUnit.java
-  │   │                    ├── 📄 SupportsArithmetic.java
-  │   │                    └── 📄 QuantityMeasurementApp.java
+  │   │                   ├── 📁 controller
+  │   │                   │   └── 📄 QuantityMeasurementController
+  │   │                   │
+  │   │                   ├── 📁 dto
+  │   │                   │   └── 📄 QuantityDTO
+  │   │                   │
+  │   │                   ├── 📁 entity
+  │   │                   │   └── 📄 QuantityMeasurementEntity.java
+  │   │                   │
+  │   │                   ├── 📁 exception
+  │   │                   │   └── 📄 QuantityMeasurementException.java
+  │   │                   │
+  │   │                   ├── 📁 interfaces
+  │   │                   │   ├── 📄 IMeasurable.java
+  │   │                   │   └── 📄 SupportsArithmetic.java
+  │   │                   │
+  │   │                   ├── 📁 model
+  │   │                   │   ├── 📄 Quantity.java
+  │   │                   │   └── 📄 QuantityModel.java
+  │   │                   │
+  │   │                   ├── 📁 repository
+  │   │                   │   ├── 📄 IQuantityMeasurementRepository.java
+  │   │                   │   └── 📄 QuantityMeasurementCacheRepository.java
+  │   │                   │
+  │   │                   ├── 📁 service
+  │   │                   │   ├── 📄 IQuantityMeasurementService.java
+  │   │                   │   └── 📄 QuantityMeasurementServiceImpl.java
+  │   │                   │
+  │   │                   ├── 📁 units
+  │   │                   │   ├── 📄 LengthUnit.java
+  │   │                   │   ├── 📄 TemperatureUnit.java
+  │   │                   │   ├── 📄 VolumeUnit.java
+  │   │                   │   └── 📄 WeightUnit.java
+  │   │                   │
+  │   │                   └── 📄 QuantityMeasurementApp.java
   │   │
-  │   └── 📁 test
-  │       └── 📁 java
-  │           └── 📁 com
-  │                   └── 📁 quantitymeasurement
-  │                       ├── 📄 FeetTest.java
-  │                       ├── 📄 InchesTest.java
-  │                       ├── 📄 LengthTest.java
-  │                       ├── 📄 WeightTest.java
-  │                       ├── 📄 ArchitecturalTest.java
-  │                       ├── 📄 BackwardCompatibilityTest.java
-  │                       ├── 📄 CentralizedArithmeticLogicTest.java
-  │                       ├── 📄 ConceptualValidationTest.java
-  │                       ├── 📄 QuantityAdditionTest.java
-  │                       ├── 📄 QuantityArithmeticTest.java
-  │                       ├── 📄 QuantityConversionTest.java
-  │                       ├── 📄 QuantityEqualityTest.java
-  │                       ├── 📄 TemperatureQuantityTest.java
-  │                       ├── 📄 WeightQuantityTest.java
-  │                       └── 📄 VolumeQuantityTest.java
+  │   ├── 📁 test
+  │   │   └── 📁 java
+  │   │       └── 📁 com
+  │   │           └── 📁 app
+  │   │               └── 📁 quantitymeasurement
+  │   │                   ├── 📁 controller
+  │   │                   │     └── 📄 QuantityMeasurementControllerTest.java
+  │   │                   │
+  │   │                   ├── 📁 dto
+  │   │                   │   └── 📄 QuantityDTOTest.java
+  │   │                   │
+  │   │                   ├── 📁 entity
+  │   │                   │   └── 📄 QuantityMeasurementEntityTest.java
+  │   │                   │
+  │   │                   ├── 📁 exception
+  │   │                   │   └── 📄 QuantityMeasurementExceptionTest.java
+  │   │                   │
+  │   │                   ├── 📁 interfaces
+  │   │                   │   └── 📄 IMeasurableTest.java
+  │   │                   │
+  │   │                   ├── 📁 model
+  │   │                   │   ├── 📄 QuantityArithmeticTest.java
+  │   │                   │   ├── 📄 QuantityConversionTest.java
+  │   │                   │   ├── 📄 QuantityEqualityTest.java
+  │   │                   │   └── 📄 QuantityModelTest.java
+  │   │                   │
+  │   │                   ├── 📁 repository
+  │   │                   │   └── 📄 QuantityMeasurementCacheRepositoryTest.java
+  │   │                   │
+  │   │                   ├── 📁 service
+  │   │                   │   └── 📄 QuantityMeasurementServiceTest.java
+  │   │                   │
+  │   │                   └── 📁 units
+  │   │                       ├── 📄 LengthUnitTest.java
+  │   │                       ├── 📄 TemperatureUnitTest.java
+  │   │                       ├── 📄 VolumeUnitTest.java
+  │   │                       └── 📄 WeightUnitTest.java
+  │   │
+  │   └── 📁 data
+  │       └── 📄 quantity_measurement_repo.ser
   │
   ├── ⚙️ pom.xml
   ├── 🚫 .gitignore
