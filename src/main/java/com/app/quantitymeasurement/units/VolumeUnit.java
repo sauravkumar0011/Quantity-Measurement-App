@@ -1,8 +1,5 @@
 package com.app.quantitymeasurement.units;
 
-import com.app.quantitymeasurement.interfaces.IMeasurable;
-import com.app.quantitymeasurement.interfaces.SupportsArithmetic;
-
 /**
  * VolumeUnit – Enumeration representing supported volume measurement units
  * in the Quantity Measurement system.
@@ -48,36 +45,25 @@ public enum VolumeUnit implements IMeasurable, SupportsArithmetic {
     GALLON(3.785412);
 
     /**
-     * Conversion factor used to convert the unit value
-     * to the base unit of the volume measurement category.
+     * Conversion factor used to convert the unit value to the base unit (LITRE).
      */
     private final double conversionFactor;
 
     /**
      * Constructor for VolumeUnit enum constants.
      *
-     * Each enum constant is initialized with a conversion
-     * factor that determines how the unit converts to
-     * the base unit of the volume measurement category.
-     *
-     * @param conversionFactor the multiplier used to convert
-     *                         the unit value to the base unit
+     * @param conversionFactor multiplier to convert this unit to LITRE
      */
     VolumeUnit(double conversionFactor) {
         this.conversionFactor = conversionFactor;
     }
 
     /**
-     * Converts the given unit value to the base unit.
+     * Converts the given unit value to the base unit (LITRE).
+     * Result is rounded to 6 decimal places for precision.
      *
-     * The conversion multiplies the given value by the
-     * conversion factor associated with the unit.
-     *
-     * The result is rounded to 6 decimal places to ensure
-     * precision and consistency during conversion operations.
-     *
-     * @param value the value in the current unit
-     * @return the converted value in the base unit
+     * @param value value in current unit
+     * @return value in LITRE
      */
     @Override
     public double convertToBaseUnit(double value) {
@@ -86,17 +72,11 @@ public enum VolumeUnit implements IMeasurable, SupportsArithmetic {
     }
 
     /**
-     * Converts a value from the base unit to the current unit.
+     * Converts a value from LITRE to the current unit.
+     * Result is rounded to 6 decimal places for precision.
      *
-     * This method performs the reverse conversion by dividing
-     * the base unit value by the conversion factor associated
-     * with the unit.
-     *
-     * The result is rounded to 6 decimal places to maintain
-     * numerical precision during conversions.
-     *
-     * @param baseValue the value in the base unit
-     * @return the converted value in the current unit
+     * @param baseValue value in LITRE
+     * @return value in current unit
      */
     @Override
     public double convertFromBaseUnit(double baseValue) {
@@ -105,62 +85,39 @@ public enum VolumeUnit implements IMeasurable, SupportsArithmetic {
     }
 
     /**
-     * Returns the name of the volume unit.
+     * Returns the enum constant name as the unit identifier.
      *
-     * The enum constant name is used as the unit
-     * identifier within the Quantity Measurement system.
-     *
-     * @return the name of the unit
+     * @return unit name
      */
     @Override
     public String getUnitName() {
         return name();
     }
-    
+
     /**
-     * Returns the measurement type associated with this unit.
+     * Returns "VolumeUnit" to identify the measurement category.
      *
-     * This method returns the simple name of the enum class,
-     * which identifies the measurement category for the unit.
-     *
-     * Example:
-     * VolumeUnit -> "VolumeUnit"
-     *
-     * @return the measurement type name
+     * @return measurement type name
      */
     @Override
-	public String getMeasurementType() {
-		return this.getClass().getSimpleName();
-	}
+    public String getMeasurementType() {
+        return this.getClass().getSimpleName();
+    }
 
-	/**
-	 * Retrieves the unit instance corresponding to the
-	 * given volume unit name.
-	 *
-	 * This method iterates through all available enum
-	 * constants of {@code VolumeUnit} and returns the
-	 * matching unit instance.
-	 *
-	 * The comparison is case-insensitive.
-	 *
-	 * If the provided unit name does not match any
-	 * supported volume unit, an
-	 * {@link IllegalArgumentException} is thrown.
-	 *
-	 * @param unitName the name of the volume unit
-	 * @return the corresponding {@link IMeasurable} unit instance
-	 * @throws IllegalArgumentException if the unit name is invalid
-	 */
-	@Override
-	public IMeasurable getUnitInstance(String unitName) {
-		for(VolumeUnit unit : VolumeUnit.values()) {			
-			if(unit.getUnitName().equalsIgnoreCase(unitName)) {				
-				return unit;
-			}
-		}
-		
-		throw new IllegalArgumentException(
-			"Invalid volume unit: " + unitName
-		);
-	}
+    /**
+     * Retrieves the VolumeUnit instance by name (case-insensitive).
+     *
+     * @param unitName name of the unit
+     * @return matching VolumeUnit
+     * @throws IllegalArgumentException if unit not found
+     */
+    @Override
+    public IMeasurable getUnitInstance(String unitName) {
+        for (VolumeUnit unit : VolumeUnit.values()) {
+            if (unit.getUnitName().equalsIgnoreCase(unitName)) {
+                return unit;
+            }
+        }
+        throw new IllegalArgumentException("Invalid volume unit: " + unitName);
+    }
 }
