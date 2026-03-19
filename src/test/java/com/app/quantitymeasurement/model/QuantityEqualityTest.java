@@ -1,5 +1,6 @@
 package com.app.quantitymeasurement.model;
 
+import com.app.quantitymeasurement.entity.Quantity;
 import com.app.quantitymeasurement.units.LengthUnit;
 import com.app.quantitymeasurement.units.WeightUnit;
 import com.app.quantitymeasurement.units.VolumeUnit;
