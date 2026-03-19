@@ -1,9 +1,6 @@
 package com.app.quantitymeasurement.entity;
-
-import com.app.quantitymeasurement.interfaces.IMeasurable;
-import com.app.quantitymeasurement.model.QuantityModel;
+import com.app.quantitymeasurement.units.IMeasurable;
 import com.app.quantitymeasurement.units.LengthUnit;
-import com.app.quantitymeasurement.units.WeightUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -193,7 +190,8 @@ public class QuantityMeasurementEntityTest {
         assertNotEquals(entity, null);
     }
 
-    @Test
+    @SuppressWarnings("unlikely-arg-type")
+	@Test
     public void testEquals_DifferentClass_ReturnsFalse() {
         QuantityMeasurementEntity entity =
             new QuantityMeasurementEntity(q1, q2, "COMPARE", "Equal");
