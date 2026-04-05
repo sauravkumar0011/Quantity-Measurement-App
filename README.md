@@ -124,6 +124,26 @@
     - `QuantityMeasurementRepositoryTest` — Spring Data JPA repository tests.
   - Demonstrates migration from **JDBC-based persistence (UC16)** to a modern **Spring Boot + JPA enterprise architecture** while maintaining the original measurement logic and full test coverage.
 
+- 🧩 **UC18 – Spring Security with JWT Authentication, Google/GitHub OAuth2 & Industry-Standard Refactoring:**
+  - Activates full **Spring Security** with JWT, Google OAuth2, and GitHub OAuth2 authentication, secured REST endpoints, role-based authorization, and complete security-focused test coverage.
+  - Introduces a `security` package containing `JwtTokenProvider`, `JwtAuthenticationFilter`, `JwtAuthenticationEntryPoint`, `JwtAccessDeniedHandler`, `CustomUserDetailsService`, `UserPrincipal`, `CustomOAuth2UserService`, `OAuth2AuthenticationSuccessHandler`, and `OAuth2AuthenticationFailureHandler`.
+  - **JWT lifecycle** — `JwtTokenProvider` generates signed HS256 tokens from authenticated principals, extracts email and role claims, and validates tokens on every request; configured via `app.jwt.secret` (Base64-encoded) and `app.jwt.expiration-ms` in `application.properties`.
+  - **Local authentication** — `AuthController` (`/api/v1/auth`) exposes `POST /register` (BCrypt-hash password, persist `User`, return JWT), `POST /login` (verify credentials, return JWT), `GET /me` (return profile of authenticated user), `PUT /forgotPassword/{email}` (reset password without prior authentication), and `PUT /resetPassword/{email}` (reset password while authenticated). All HTTP-handling concerns are kept in the controller; business logic is delegated to `AuthenticationService`.
+  - Introduces `AuthenticationService` as a dedicated service class encapsulating all authentication business logic — user registration, credential verification, JWT issuance, and password management — keeping `AuthController` thin and single-responsibility.
+  - Adds `EmailService` for async (`@Async`) SMTP email notifications on authentication events (registration, login, and password changes); configured via `spring.mail.*` properties and backed by `spring-boot-starter-mail`.
+  - Adds `ForgotPasswordRequest` DTO (with `@NotBlank`, `@Pattern` constraints) for the forgot/reset password request payload, and `MessageResponse` DTO as a lightweight wrapper for human-readable status messages returned by password-management endpoints.
+  - Introduces `CorsConfig` in the `config` package providing a centralised `CorsConfigurationSource` bean consumed by Spring Security's CORS filter; allowed origins are configurable per environment via `app.cors.allowed-origins` in profile-specific property files.
+  - **Google OAuth2** — Spring Security's built-in OAuth2 login filter handles the Authorization Code flow (`/oauth2/authorization/google`); `CustomOAuth2UserService` resolves the Google profile to a local `User` (create-or-update), and `OAuth2AuthenticationSuccessHandler` issues a JWT redirect to the configured frontend URI.
+  - **GitHub OAuth2** — identical flow at `/oauth2/authorization/github`; `CustomOAuth2UserService` dispatches on the `registrationId` and applies GitHub-specific attribute extraction (`id` → `providerId`, `login` as name fallback, `avatar_url` as image). GitHub's `email` field may be `null` when the user's primary email is private; the service rejects such logins with a descriptive error. Requires `read:user,user:email` scope and a GitHub OAuth App registered at https://github.com/settings/developers.
+  - Introduces `User` JPA entity (table `app_user`) with fields: `email`, `name`, `password` (nullable for OAuth2), `provider` (`AuthProvider` enum: `LOCAL`/`GOOGLE`/`GITHUB`), `providerId`, `role` (`Role` enum: `USER`/`ADMIN`), `imageUrl`, and `createdAt` (set via `@PrePersist`).
+  - Adds `UserRepository` (Spring Data JPA) with `existsByEmail()` and `findByEmail()` derived queries.
+  - Adds `AuthRequest`, `AuthResponse` (Builder pattern), and `RegisterRequest` DTOs with Bean Validation constraints (`@NotBlank`, `@Email`, `@Size`).
+  - **Role-based access control** via `@EnableMethodSecurity` and URL-level rules: public auth/OAuth2/Swagger/Actuator endpoints; `USER`+`ADMIN` for all quantity operations; `ADMIN` only for `GET /api/v1/quantities/history/errored`.
+  - **STATELESS session policy** — no HTTP session is ever created; CSRF disabled; HTTP Basic and form login disabled.
+  - `SecurityConfig` registers `DaoAuthenticationProvider` (BCrypt + `CustomUserDetailsService`), exposes `AuthenticationManager` as a bean, and inserts `JwtAuthenticationFilter` before `UsernamePasswordAuthenticationFilter`.
+  - Adds `app.jwt.secret`, `app.jwt.expiration-ms`, `spring.security.oauth2.client.registration.google.*`, and `app.oauth2.redirect-uri` to `application.properties` (all resolved from environment variables in production).
+  - Adds comprehensive **unit and integration test coverage for authentication and security components** ensuring correctness of JWT generation, user principal resolution, DTO validation, repository interaction, and controller endpoints.
+  
 ### 🧰 Tech Stack
 
 - **Java 17+** — core language and application development  
