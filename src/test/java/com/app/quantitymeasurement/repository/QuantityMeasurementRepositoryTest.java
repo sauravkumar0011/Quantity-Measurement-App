@@ -1,11 +1,12 @@
 package com.app.quantitymeasurement.repository;
 
-import com.app.quantitymeasurement.model.QuantityMeasurementEntity;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;import org.springframework.test.context.ActiveProfiles;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+
+import com.app.quantitymeasurement.entity.QuantityMeasurementEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * - findSuccessfulByOperation() (custom @Query) filters by isError=false
  * - countByOperationAndErrorFalse() counts correctly
  * - findByErrorTrue() returns only error records
+ * - Standard JPA save and findAll work correctly
  */
 @DataJpaTest
 @ActiveProfiles("test")
