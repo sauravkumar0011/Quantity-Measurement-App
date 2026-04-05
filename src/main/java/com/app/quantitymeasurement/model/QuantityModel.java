@@ -1,5 +1,7 @@
 package com.app.quantitymeasurement.model;
 
+import com.app.quantitymeasurement.dto.response.QuantityDTO;
+import com.app.quantitymeasurement.entity.QuantityMeasurementEntity;
 import com.app.quantitymeasurement.unit.IMeasurable;
 
 /**
@@ -9,13 +11,13 @@ import com.app.quantitymeasurement.unit.IMeasurable;
  * Used by the service layer to carry operands and results during comparison,
  * conversion, and arithmetic calculations.
  *
- * <p>This class is distinct from {@link QuantityDTO} (which is used for API
+ * This class is distinct from {@link QuantityDTO} (which is used for API
  * communication) and from {@link QuantityMeasurementEntity} (which is used for
  * persistence). The service converts incoming DTOs to {@code QuantityModel}
  * instances before processing, and converts the results back to DTOs before
- * returning them to the controller.</p>
+ * returning them to the controller.
  *
- * @param <U> the unit type, which must implement {@link IMeasurable}
+ * @param the unit type, which must implement {@link IMeasurab
  */
 public class QuantityModel<U extends IMeasurable> {
 
